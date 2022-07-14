@@ -1,0 +1,24 @@
+.header {
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header::after {
+    content: "";
+    background: url("https://imgix.bustle.com/uploads/shutterstock/2022/5/31/cf2ed69f-b103-4506-bfd4-c308a32a1a87-shutterstock-1905915070.jpg?w=2000&h=1090&fit=crop&crop=faces&auto=format%2Ccompress");
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    height: 30vh;
+}
+
+.header h1 {
+    margin: 0;
+}
