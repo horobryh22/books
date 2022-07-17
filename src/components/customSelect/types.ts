@@ -1,4 +1,4 @@
-import { SelectItem } from 'components/Header/types';
+import { SelectItem } from 'components/header/types';
 
 export type CustomSelectType = {
     name: string;

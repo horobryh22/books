@@ -1,15 +1,20 @@
 import React from 'react';
 
-import { Book, Header } from 'components';
-import { BooksTotalCount } from 'components/BooksTotalCount';
+import { Container } from '@mui/material';
+
+import { Header } from 'components';
+import { BooksList } from 'components/booksList';
+import { BooksTotalCount } from 'components/booksTotalCount';
 import { ReturnComponentType } from 'types';
 
 export const App = (): ReturnComponentType => {
     return (
         <div>
-            <Header />
-            <BooksTotalCount />
-            <Book />
+            <Container fixed>
+                <Header />
+                <BooksTotalCount />
+                <BooksList />
+            </Container>
         </div>
     );
 };

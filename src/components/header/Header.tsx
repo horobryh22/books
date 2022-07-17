@@ -3,8 +3,8 @@ import React from 'react';
 import classes from './Header.module.css';
 import { SelectItems } from './types';
 
-import { CustomSelect } from 'components/CustomSelect';
-import { Input } from 'components/Input';
+import { CustomSelect } from 'components/customSelect';
+import { Input } from 'components/input';
 import { ReturnComponentType } from 'types';
 
 const SELECT_ITEMS: SelectItems = {
@@ -26,7 +26,7 @@ const SELECT_ITEMS: SelectItems = {
 export const Header = (): ReturnComponentType => {
     return (
         <div className={classes.header}>
-            <h1>Search for books</h1>
+            <h1 className={classes.title}>Search for books</h1>
             <Input />
             <div>
                 <CustomSelect name="Categories" items={SELECT_ITEMS.firstSelect} />

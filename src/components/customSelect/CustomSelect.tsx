@@ -12,9 +12,11 @@ import { CustomSelectType } from './types';
 
 import { ReturnComponentType } from 'types';
 
+const INITIAL_SELECT_VALUE = '10';
+
 export const CustomSelect = memo(
     ({ name, items }: CustomSelectType): ReturnComponentType => {
-        const [age, setAge] = React.useState('10');
+        const [age, setAge] = React.useState(INITIAL_SELECT_VALUE);
 
         const handleChange = (event: SelectChangeEvent): void => {
             setAge(event.target.value);
