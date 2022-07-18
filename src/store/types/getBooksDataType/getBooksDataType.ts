@@ -1,5 +1,6 @@
 export type GetBooksDataType = {
     bookTitle: string;
     category: string;
-    sortValue: string;
+    sorting: string;
+    startIndex?: string;
 };

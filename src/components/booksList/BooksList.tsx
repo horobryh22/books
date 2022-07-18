@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { CircularProgress, Grid, Paper } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 
 import { Book } from 'components/book';
-import { useAppDispatch, useTypedSelector } from 'hooks';
-import { getBooks } from 'store/slices/booksSlice/booksSlice';
+import { BooksTotalCount } from 'components/booksTotalCount';
+import { LoadMore } from 'components/loadMore';
+import { useTypedSelector } from 'hooks';
 import { ReturnComponentType } from 'types';
 
 const circleStyle = {
@@ -15,38 +16,31 @@ const circleStyle = {
 };
 
 export const BooksList = (): ReturnComponentType => {
-    const dispatch = useAppDispatch();
-
     const books = useTypedSelector(state => state.books.books);
     const isGettingBooks = useTypedSelector(state => state.books.isGettingBooks);
+    const totalItems = useTypedSelector(state => state.books.totalItems);
 
-    const mappedBooks = books.map(book => {
-        return (
-            <Grid
-                key={book.id}
-                item
-                xs={3}
-                display="flex"
-                justifyContent="center"
-                style={{ marginTop: '30px' }}
-            >
-                <Paper elevation={8}>
+    const mappedBooks =
+        books &&
+        books.map(book => {
+            return (
+                <Grid
+                    key={book.id}
+                    item
+                    xs={3}
+                    display="flex"
+                    justifyContent="center"
+                    style={{ marginTop: '30px' }}
+                >
                     <Book
                         imageLinks={book.volumeInfo.imageLinks}
                         title={book.volumeInfo.title}
                         authors={book.volumeInfo.authors}
                         categories={book.volumeInfo.categories}
                     />
-                </Paper>
-            </Grid>
-        );
-    });
-
-    useEffect(() => {
-        dispatch(
-            getBooks({ bookTitle: 'flowers', category: 'art', sortValue: 'newest' }),
-        );
-    }, [dispatch]);
+                </Grid>
+            );
+        });
 
     if (isGettingBooks) {
         return (
@@ -57,8 +51,16 @@ export const BooksList = (): ReturnComponentType => {
     }
 
     return (
-        <Grid container justifyContent="flex-start" item xs={12}>
-            {mappedBooks}
-        </Grid>
+        <div>
+            {totalItems && (
+                <>
+                    <BooksTotalCount totalItems={totalItems} />
+                    <Grid container justifyContent="flex-start" item xs={12}>
+                        {mappedBooks}
+                    </Grid>
+                    <LoadMore />
+                </>
+            )}
+        </div>
     );
 };

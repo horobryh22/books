@@ -43,16 +43,24 @@ export const getBooks = createAsyncThunk<
     ResponseType,
     GetBooksDataType,
     { rejectValue: string }
->('books/getBooks', async ({ bookTitle, category, sortValue }, { rejectWithValue }) => {
-    try {
-        const response = await booksAPI.getBooks(bookTitle, category, sortValue);
+>(
+    'books/getBooks',
+    async ({ bookTitle, category, sorting, startIndex = '0' }, { rejectWithValue }) => {
+        try {
+            const response = await booksAPI.getBooks(
+                bookTitle,
+                category,
+                sorting,
+                startIndex,
+            );
 
-        return response.data;
-    } catch (e) {
-        const err = e as Error;
+            return response.data;
+        } catch (e) {
+            const err = e as Error;
 
-        return rejectWithValue(`getBooks: ${err.message}`);
-    }
-});
+            return rejectWithValue(`getBooks: ${err.message}`);
+        }
+    },
+);
 
 export default booksSlice.reducer;

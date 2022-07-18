@@ -4,6 +4,12 @@ export type SelectItems = {
 
 export type SelectItem = {
     id: number;
-    value: number;
+    value: string;
     title: string;
+};
+
+export type SearchFormValues = {
+    category: string;
+    sorting: string;
+    bookTitle: string;
 };

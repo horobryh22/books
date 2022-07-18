@@ -7,13 +7,18 @@ const instance = axios.create({
 });
 
 export const booksAPI = {
-    getBooks: async (bookTitle: string, category: string, sortValue: string) => {
+    getBooks: async (
+        bookTitle: string,
+        category: string,
+        sorting: string,
+        startIndex: string = '0',
+    ) => {
         return instance.get<ResponseType>(`volumes?q=${bookTitle}+subject:${category}`, {
             params: {
                 key: 'AIzaSyCtv16929eV7o5_B44eQcMt9A98OnSbOVE',
-                printType: 'books',
-                maxResults: '2',
-                orderBy: sortValue,
+                startIndex,
+                maxResults: '30',
+                orderBy: sorting,
             },
         });
     },

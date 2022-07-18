@@ -4,7 +4,6 @@ import { Container } from '@mui/material';
 
 import { Header } from 'components';
 import { BooksList } from 'components/booksList';
-import { BooksTotalCount } from 'components/booksTotalCount';
 import { ReturnComponentType } from 'types';
 
 export const App = (): ReturnComponentType => {
@@ -12,7 +11,6 @@ export const App = (): ReturnComponentType => {
         <div>
             <Container fixed>
                 <Header />
-                <BooksTotalCount />
                 <BooksList />
             </Container>
         </div>

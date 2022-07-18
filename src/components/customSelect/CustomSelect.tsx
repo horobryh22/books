@@ -1,27 +1,14 @@
-import React, { memo, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
-import {
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    SelectChangeEvent,
-} from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import PropTypes from 'prop-types';
 
 import { CustomSelectType } from './types';
 
 import { ReturnComponentType } from 'types';
 
-const INITIAL_SELECT_VALUE = '10';
-
-export const CustomSelect = memo(
-    ({ name, items }: CustomSelectType): ReturnComponentType => {
-        const [age, setAge] = React.useState(INITIAL_SELECT_VALUE);
-
-        const handleChange = (event: SelectChangeEvent): void => {
-            setAge(event.target.value);
-        };
-
+export const CustomSelect: React.FC<CustomSelectType> = React.forwardRef(
+    ({ items, name, ...field }, ref): ReturnComponentType => {
         const mappedItems = useMemo(() => {
             return items.map(item => {
                 return (
@@ -36,10 +23,10 @@ export const CustomSelect = memo(
             <FormControl variant="filled" sx={{ m: 1, minWidth: 150 }}>
                 <InputLabel id="demo-simple-select-filled-label">{name}</InputLabel>
                 <Select
+                    ref={ref}
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
-                    value={age}
-                    onChange={handleChange}
+                    {...field}
                 >
                     {mappedItems}
                 </Select>
@@ -47,3 +34,8 @@ export const CustomSelect = memo(
         );
     },
 );
+
+CustomSelect.propTypes = {
+    name: PropTypes.string.isRequired,
+    items: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,
+};
