@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Container } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 
 import { Header } from 'components';
-import { BooksList } from 'components/booksList';
+import { BookPage, BooksListPage } from 'pages';
 import { ReturnComponentType } from 'types';
 
 export const App = (): ReturnComponentType => {
@@ -11,7 +12,10 @@ export const App = (): ReturnComponentType => {
         <div>
             <Container fixed>
                 <Header />
-                <BooksList />
+                <Routes>
+                    <Route path="/" element={<BooksListPage />} />
+                    <Route path="/:id" element={<BookPage />} />
+                </Routes>
             </Container>
         </div>
     );

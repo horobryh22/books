@@ -1,6 +1,6 @@
 import { BookType } from 'store/types';
 
-export type ResponseType = {
+export type ResponseGetBooksType = {
     items: BookType[];
     kind: string;
     totalItems: number;

@@ -1,19 +1,10 @@
 import React from 'react';
 
-import { CircularProgress, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
-import { Book } from 'components/book';
-import { BooksTotalCount } from 'components/booksTotalCount';
-import { LoadMore } from 'components/loadMore';
+import { Book, BooksTotalCount, LoadMore, Preloader } from 'components';
 import { useTypedSelector } from 'hooks';
 import { ReturnComponentType } from 'types';
-
-const circleStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '300px',
-};
 
 export const BooksList = (): ReturnComponentType => {
     const books = useTypedSelector(state => state.books.books);
@@ -33,6 +24,7 @@ export const BooksList = (): ReturnComponentType => {
                     style={{ marginTop: '30px' }}
                 >
                     <Book
+                        bookId={book.id}
                         imageLinks={book.volumeInfo.imageLinks}
                         title={book.volumeInfo.title}
                         authors={book.volumeInfo.authors}
@@ -43,11 +35,7 @@ export const BooksList = (): ReturnComponentType => {
         });
 
     if (isGettingBooks) {
-        return (
-            <div style={circleStyle}>
-                <CircularProgress />
-            </div>
-        );
+        return <Preloader />;
     }
 
     return (

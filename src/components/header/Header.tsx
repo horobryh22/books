@@ -5,10 +5,9 @@ import { Controller, useForm } from 'react-hook-form';
 import classes from './Header.module.css';
 import { SearchFormValues, SelectItems } from './types';
 
-import { CustomSelect } from 'components/customSelect';
-import { Input } from 'components/input';
-import { useAppDispatch } from 'hooks';
-import { getBooks } from 'store/slices';
+import { CustomSelect, Input } from 'components';
+import { useAppDispatch, useTypedSelector } from 'hooks';
+import { fetchBooks } from 'store';
 import { ReturnComponentType } from 'types';
 
 const SELECT_ITEMS: SelectItems = {
@@ -29,17 +28,22 @@ const SELECT_ITEMS: SelectItems = {
 
 export const Header = (): ReturnComponentType => {
     const dispatch = useAppDispatch();
+
+    const category = useTypedSelector(state => state.books.searchValues.category);
+    const sorting = useTypedSelector(state => state.books.searchValues.sorting);
+    const bookTitle = useTypedSelector(state => state.books.searchValues.bookTitle);
+
     const { control, handleSubmit } = useForm<SearchFormValues>({
         defaultValues: {
-            bookTitle: '',
-            category: ' ',
-            sorting: 'relevance',
+            bookTitle,
+            category,
+            sorting,
         },
     });
     const onSubmit = (data: SearchFormValues): void => {
         const { bookTitle, category, sorting } = data;
 
-        dispatch(getBooks({ bookTitle, category, sorting }));
+        dispatch(fetchBooks({ bookTitle, category, sorting, startIndex: 0 }));
     };
 
     return (
