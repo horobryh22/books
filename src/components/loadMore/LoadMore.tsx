@@ -6,14 +6,14 @@ import { Button } from '@mui/material';
 import classes from './LoadMore.module.css';
 
 import { useAppDispatch, useTypedSelector } from 'hooks';
-import { loadMoreBooks } from 'store';
+import { loadMoreBooks, selectStartIndex, selectTotalItems } from 'store';
 import { ReturnComponentType } from 'types';
 
 export const LoadMore = (): ReturnComponentType => {
     const dispatch = useAppDispatch();
 
-    const totalCountBooks = useTypedSelector(state => state.books.totalItems);
-    const paginationStep = useTypedSelector(state => state.books.searchValues.startIndex);
+    const totalCountBooks = useTypedSelector(selectTotalItems);
+    const paginationStep = useTypedSelector(selectStartIndex);
 
     const disableCondition = totalCountBooks ? totalCountBooks <= paginationStep : false;
 

@@ -6,7 +6,15 @@ import classes from './BookInfo.module.css';
 
 import { Preloader } from 'components';
 import { useAppDispatch, useTypedSelector } from 'hooks';
-import { fetchBook } from 'store';
+import {
+    fetchBook,
+    selectAuthors,
+    selectCategories,
+    selectDescription,
+    selectImage,
+    selectIsFetchingSelectedBook,
+    selectTitle,
+} from 'store';
 import { ReturnComponentType } from 'types';
 
 export const BookInfo = (): ReturnComponentType => {
@@ -14,23 +22,13 @@ export const BookInfo = (): ReturnComponentType => {
 
     const { id: bookId } = useParams();
 
-    const isFetchingSelectedBook = useTypedSelector(
-        state => state.books.isFetchingSelectedBook,
-    );
+    const isFetchingSelectedBook = useTypedSelector(selectIsFetchingSelectedBook);
 
-    const title = useTypedSelector(state => state.books.selectedBook.volumeInfo.title);
-    const authors = useTypedSelector(
-        state => state.books.selectedBook.volumeInfo.authors,
-    );
-    const categories = useTypedSelector(
-        state => state.books.selectedBook.volumeInfo.categories,
-    );
-    const image = useTypedSelector(
-        state => state.books.selectedBook.volumeInfo.imageLinks.thumbnail,
-    );
-    const description = useTypedSelector(
-        state => state.books.selectedBook.volumeInfo.description,
-    );
+    const title = useTypedSelector(selectTitle);
+    const authors = useTypedSelector(selectAuthors);
+    const categories = useTypedSelector(selectCategories);
+    const image = useTypedSelector(selectImage);
+    const description = useTypedSelector(selectDescription);
 
     useEffect(() => {
         if (bookId) {

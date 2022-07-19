@@ -6,13 +6,19 @@ import classes from './BooksList.module.css';
 
 import { Book, BooksTotalCount, LoadMore, Preloader } from 'components';
 import { useTypedSelector } from 'hooks';
+import {
+    selectBooks,
+    selectDidUserSearch,
+    selectIsGettingBooks,
+    selectTotalItems,
+} from 'store';
 import { ReturnComponentType } from 'types';
 
 export const BooksList = (): ReturnComponentType => {
-    const books = useTypedSelector(state => state.books.books);
-    const isGettingBooks = useTypedSelector(state => state.books.isGettingBooks);
-    const totalItems = useTypedSelector(state => state.books.totalItems);
-    const didUserSearch = useTypedSelector(state => state.books.didUserSearch);
+    const books = useTypedSelector(selectBooks);
+    const isGettingBooks = useTypedSelector(selectIsGettingBooks);
+    const totalItems = useTypedSelector(selectTotalItems);
+    const didUserSearch = useTypedSelector(selectDidUserSearch);
 
     const mappedBooks =
         books &&

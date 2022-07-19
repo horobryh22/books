@@ -1,0 +1,11 @@
+export { selectIsFetchingSelectedBook } from './selectIsFetchingSelectedBook';
+export { selectDescription } from './selectDescription';
+export { selectImage } from './selectImage';
+export { selectTitle } from './selectTitle';
+export { selectCategories } from './selectCategories';
+export { selectAuthors } from './selectAuthors';
+export { selectDidUserSearch } from './selectDidUserSearch';
+export { selectTotalItems } from './selectTotalItems';
+export { selectBooks } from './selectBooks';
+export { selectIsGettingBooks } from './selectIsGettingBooks';
+export { selectStartIndex } from './selectStartIndex';
