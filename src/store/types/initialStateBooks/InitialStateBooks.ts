@@ -3,9 +3,9 @@ import { BookType, GetBooksDataType } from 'store/types';
 import { Nullable } from 'types';
 
 export type InitialStateBooks = {
+    didUserSearch: boolean;
     isGettingBooks: boolean;
     books: BookType[];
-    error: Nullable<string>;
     totalItems: Nullable<number>;
     searchValues: GetBooksDataType;
     selectedBook: ResponseGetBookType;

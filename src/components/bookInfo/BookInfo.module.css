@@ -1,0 +1,29 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    padding: 40px 0 0 0;
+}
+
+.image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.categories {
+    font-style: italic;
+}
+
+.authors {
+    font-style: oblique;
+    font-weight: bold;
+}
+
+.image img {
+    width: 300px;
+}
+
+.info {
+    width: 50%;
+}

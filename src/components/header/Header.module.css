@@ -24,6 +24,14 @@
     text-transform: uppercase;
 }
 
+.errorDiv {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    color: #d23636;
+    font-size: 20px;
+}
+
 .form {
     display: flex;
     flex-direction: column;

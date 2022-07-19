@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { booksAPI, ResponseGetBookType, ResponseGetBooksType } from 'api';
+import { PAGINATION_STEP } from 'constants/base';
+import { RootState } from 'store/store';
 import { GetBooksDataType, InitialStateBooks } from 'store/types';
 
 const initialState: InitialStateBooks = {
+    didUserSearch: false,
     isGettingBooks: false,
     books: [],
-    error: null,
     totalItems: null,
     searchValues: {
         bookTitle: '',
@@ -42,19 +44,32 @@ const booksSlice = createSlice({
             action: PayloadAction<GetBooksDataType>,
         ) => {
             state.searchValues = action.payload;
-            state.searchValues.startIndex += 30;
+            state.searchValues.startIndex += PAGINATION_STEP;
         },
     },
     extraReducers: builder => {
         builder.addCase(fetchBooks.fulfilled, (state, action) => {
-            state.books = [...state.books, ...action.payload.items];
+            state.books = action.payload.items;
             state.totalItems = action.payload.totalItems;
             state.isGettingBooks = false;
+            state.didUserSearch = true;
         });
         builder.addCase(fetchBooks.pending, state => {
             state.isGettingBooks = true;
         });
         builder.addCase(fetchBooks.rejected, (state, action) => {
+            state.isGettingBooks = false;
+            console.error(action.payload);
+        });
+        builder.addCase(loadMoreBooks.fulfilled, (state, action) => {
+            state.books = [...state.books, ...action.payload.items];
+            state.isGettingBooks = false;
+            state.searchValues.startIndex += PAGINATION_STEP;
+        });
+        builder.addCase(loadMoreBooks.pending, state => {
+            state.isGettingBooks = true;
+        });
+        builder.addCase(loadMoreBooks.rejected, (state, action) => {
             state.isGettingBooks = false;
             console.error(action.payload);
         });
@@ -99,6 +114,30 @@ export const fetchBooks = createAsyncThunk<
         }
     },
 );
+
+export const loadMoreBooks = createAsyncThunk<
+    ResponseGetBooksType,
+    void,
+    { rejectValue: string; state: RootState }
+>('books/loadMoreBooks', async (_, { rejectWithValue, getState }) => {
+    try {
+        const { bookTitle, category, sorting, startIndex } =
+            getState().books.searchValues;
+
+        const response = await booksAPI.getBooks({
+            bookTitle,
+            category,
+            sorting,
+            startIndex,
+        });
+
+        return response.data;
+    } catch (e) {
+        const err = e as Error;
+
+        return rejectWithValue(`loadMoreBooks: ${err.message}`);
+    }
+});
 
 export const fetchBook = createAsyncThunk<
     ResponseGetBookType,

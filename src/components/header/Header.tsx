@@ -33,7 +33,12 @@ export const Header = (): ReturnComponentType => {
     const sorting = useTypedSelector(state => state.books.searchValues.sorting);
     const bookTitle = useTypedSelector(state => state.books.searchValues.bookTitle);
 
-    const { control, handleSubmit } = useForm<SearchFormValues>({
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<SearchFormValues>({
         defaultValues: {
             bookTitle,
             category,
@@ -44,6 +49,8 @@ export const Header = (): ReturnComponentType => {
         const { bookTitle, category, sorting } = data;
 
         dispatch(fetchBooks({ bookTitle, category, sorting, startIndex: 0 }));
+
+        reset();
     };
 
     return (
@@ -55,9 +62,16 @@ export const Header = (): ReturnComponentType => {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                        <Input {...field} onSubmit={handleSubmit(onSubmit)} />
+                        <Input
+                            {...field}
+                            onSubmit={handleSubmit(onSubmit)}
+                            error={errors.bookTitle?.type === 'required'}
+                        />
                     )}
                 />
+                <div className={classes.errorDiv}>
+                    {errors.bookTitle?.type === 'required' && 'This field is required'}
+                </div>
                 <div>
                     <Controller
                         name="category"

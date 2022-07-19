@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 
+import classes from './BookInfo.module.css';
+
 import { Preloader } from 'components';
 import { useAppDispatch, useTypedSelector } from 'hooks';
 import { fetchBook } from 'store';
@@ -41,14 +43,16 @@ export const BookInfo = (): ReturnComponentType => {
     }
 
     return (
-        <div>
-            <div>
+        <div className={classes.wrapper}>
+            <div className={classes.image}>
                 <img src={`${image}`} alt="bookImage" />
             </div>
-            <div>
-                <span>{categories && categories.join('/')}</span>
+            <div className={classes.info}>
+                <span className={classes.categories}>
+                    {categories && categories.join('/')}
+                </span>
                 <h3>{title}</h3>
-                <span>{authors && authors.join(', ')}</span>
+                <span className={classes.authors}>{authors && authors.join(', ')}</span>
                 <p>{description}</p>
             </div>
         </div>

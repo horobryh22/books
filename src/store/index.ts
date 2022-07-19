@@ -1,3 +1,2 @@
 export { store } from './store';
-export { fetchBooks, fetchBook } from './slices';
-export { booksSlice } from './slices';
+export { fetchBooks, fetchBook, loadMoreBooks } from './slices';

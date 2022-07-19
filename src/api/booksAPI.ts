@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { ResponseGetBooksType, ResponseGetBookType } from './types';
 
+import { PAGINATION_STEP } from 'constants/base';
 import { GetBooksDataType } from 'store/types';
 
 const instance = axios.create({
@@ -16,7 +17,7 @@ export const booksAPI = {
                 params: {
                     key: 'AIzaSyCtv16929eV7o5_B44eQcMt9A98OnSbOVE',
                     startIndex,
-                    maxResults: '30',
+                    maxResults: `${PAGINATION_STEP}`,
                     orderBy: sorting,
                 },
             },
