@@ -4,6 +4,7 @@ import { booksAPI, ResponseGetBooksType, ResponseGetBookType } from 'api';
 import { PAGINATION_STEP } from 'constants/base';
 import { RootState } from 'store/store';
 import { GetBooksDataType, InitialStateBooks } from 'store/types';
+import { isError } from 'utils';
 
 const initialState: InitialStateBooks = {
     didUserSearch: false,
@@ -61,10 +62,6 @@ const booksSlice = createSlice({
         builder.addCase(fetchBooks.pending, state => {
             state.isGettingBooks = true;
         });
-        builder.addCase(fetchBooks.rejected, (state, action) => {
-            state.isGettingBooks = false;
-            state.error = action.payload ? action.payload : null;
-        });
         builder.addCase(loadMoreBooks.fulfilled, (state, action) => {
             state.books = [...state.books, ...action.payload.items];
             state.isGettingBooks = false;
@@ -73,10 +70,6 @@ const booksSlice = createSlice({
         builder.addCase(loadMoreBooks.pending, state => {
             state.isGettingBooks = true;
         });
-        builder.addCase(loadMoreBooks.rejected, (state, action) => {
-            state.isGettingBooks = false;
-            console.error(action.payload);
-        });
         builder.addCase(fetchBook.fulfilled, (state, action) => {
             state.selectedBook = action.payload;
             state.isFetchingSelectedBook = false;
@@ -84,9 +77,9 @@ const booksSlice = createSlice({
         builder.addCase(fetchBook.pending, state => {
             state.isFetchingSelectedBook = true;
         });
-        builder.addCase(fetchBook.rejected, (state, action) => {
-            state.isFetchingSelectedBook = false;
-            console.error(action.payload);
+        builder.addMatcher(isError, (state, action) => {
+            state.isGettingBooks = false;
+            state.error = action.payload ? action.payload : null;
         });
     },
 });

@@ -1,5 +1,11 @@
 export { store } from './store';
-export { fetchBooks, fetchBook, loadMoreBooks, setErrorNull } from './slices';
+export {
+    fetchBooks,
+    fetchBook,
+    loadMoreBooks,
+    setErrorNull,
+    setSearchValues,
+} from './slices';
 export {
     selectIsFetchingSelectedBook,
     selectImage,
@@ -12,4 +18,7 @@ export {
     selectTotalItems,
     selectDidUserSearch,
     selectStartIndex,
+    selectError,
 } from './selectors';
+export type { SortingBooksType, CategoryBooksType } from './types';
+export type { RootState, AppDispatch } from './store';
