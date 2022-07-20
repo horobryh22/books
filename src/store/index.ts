@@ -1,5 +1,5 @@
 export { store } from './store';
-export { fetchBooks, fetchBook, loadMoreBooks } from './slices';
+export { fetchBooks, fetchBook, loadMoreBooks, setErrorNull } from './slices';
 export {
     selectIsFetchingSelectedBook,
     selectImage,

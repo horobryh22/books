@@ -9,3 +9,4 @@ export { selectTotalItems } from './selectTotalItems';
 export { selectBooks } from './selectBooks';
 export { selectIsGettingBooks } from './selectIsGettingBooks';
 export { selectStartIndex } from './selectStartIndex';
+export { selectError } from './selectError';

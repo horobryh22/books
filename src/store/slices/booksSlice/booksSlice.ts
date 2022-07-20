@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { booksAPI, ResponseGetBookType, ResponseGetBooksType } from 'api';
+import { booksAPI, ResponseGetBooksType, ResponseGetBookType } from 'api';
 import { PAGINATION_STEP } from 'constants/base';
 import { RootState } from 'store/store';
 import { GetBooksDataType, InitialStateBooks } from 'store/types';
@@ -8,6 +8,7 @@ import { GetBooksDataType, InitialStateBooks } from 'store/types';
 const initialState: InitialStateBooks = {
     didUserSearch: false,
     isGettingBooks: false,
+    error: null,
     books: [],
     totalItems: null,
     searchValues: {
@@ -46,6 +47,9 @@ const booksSlice = createSlice({
             state.searchValues = action.payload;
             state.searchValues.startIndex += PAGINATION_STEP;
         },
+        setErrorNull: (state: InitialStateBooks, action: PayloadAction<null>) => {
+            state.error = action.payload;
+        },
     },
     extraReducers: builder => {
         builder.addCase(fetchBooks.fulfilled, (state, action) => {
@@ -59,7 +63,7 @@ const booksSlice = createSlice({
         });
         builder.addCase(fetchBooks.rejected, (state, action) => {
             state.isGettingBooks = false;
-            console.error(action.payload);
+            state.error = action.payload ? action.payload : null;
         });
         builder.addCase(loadMoreBooks.fulfilled, (state, action) => {
             state.books = [...state.books, ...action.payload.items];
@@ -110,7 +114,7 @@ export const fetchBooks = createAsyncThunk<
         } catch (e) {
             const err = e as Error;
 
-            return rejectWithValue(`fetchBooks: ${err.message}`);
+            return rejectWithValue(err.message);
         }
     },
 );
@@ -135,7 +139,7 @@ export const loadMoreBooks = createAsyncThunk<
     } catch (e) {
         const err = e as Error;
 
-        return rejectWithValue(`loadMoreBooks: ${err.message}`);
+        return rejectWithValue(err.message);
     }
 });
 
@@ -151,9 +155,9 @@ export const fetchBook = createAsyncThunk<
     } catch (e) {
         const err = e as Error;
 
-        return rejectWithValue(`fetchBook: ${err.message}`);
+        return rejectWithValue(err.message);
     }
 });
 
 export default booksSlice.reducer;
-export const { setSearchValues } = booksSlice.actions;
+export const { setSearchValues, setErrorNull } = booksSlice.actions;

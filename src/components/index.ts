@@ -7,3 +7,5 @@ export { BooksTotalCount } from './booksTotalCount';
 export { CustomSelect } from './customSelect';
 export { Input } from './input';
 export { LoadMore } from './loadMore';
+export { ErrorSnackbar } from './errorSnackbar';
+export { Alert } from './alert';
