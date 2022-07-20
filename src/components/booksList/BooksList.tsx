@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Grid } from '@mui/material';
 
@@ -14,34 +14,37 @@ import {
 } from 'store';
 import { ReturnComponentType } from 'types';
 
-export const BooksList = (): ReturnComponentType => {
+export const BooksList = React.memo((): ReturnComponentType => {
     const books = useTypedSelector(selectBooks);
     const isGettingBooks = useTypedSelector(selectIsGettingBooks);
     const totalItems = useTypedSelector(selectTotalItems);
     const didUserSearch = useTypedSelector(selectDidUserSearch);
 
-    const mappedBooks =
-        books &&
-        books.map(book => {
-            return (
-                <Grid
-                    key={book.id}
-                    item
-                    xs={3}
-                    display="flex"
-                    justifyContent="center"
-                    style={{ marginTop: '30px' }}
-                >
-                    <Book
-                        bookId={book.id}
-                        imageLinks={book.volumeInfo.imageLinks}
-                        title={book.volumeInfo.title}
-                        authors={book.volumeInfo.authors}
-                        categories={book.volumeInfo.categories}
-                    />
-                </Grid>
-            );
-        });
+    const mappedBooks = useMemo(() => {
+        return (
+            books &&
+            books.map(book => {
+                return (
+                    <Grid
+                        key={book.id}
+                        item
+                        xs={3}
+                        display="flex"
+                        justifyContent="center"
+                        style={{ marginTop: '30px' }}
+                    >
+                        <Book
+                            bookId={book.id}
+                            imageLinks={book.volumeInfo.imageLinks}
+                            title={book.volumeInfo.title}
+                            authors={book.volumeInfo.authors}
+                            categories={book.volumeInfo.categories}
+                        />
+                    </Grid>
+                );
+            })
+        );
+    }, [books]);
 
     if (isGettingBooks) {
         return <Preloader />;
@@ -62,4 +65,4 @@ export const BooksList = (): ReturnComponentType => {
             )}
         </div>
     );
-};
+});

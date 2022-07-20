@@ -1,8 +1,7 @@
-import React, { KeyboardEvent } from 'react';
+import React, { KeyboardEvent, useCallback } from 'react';
 
 import { Search } from '@mui/icons-material';
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 import { InputType } from './types';
@@ -11,16 +10,16 @@ import { ReturnComponentType } from 'types';
 
 const INPUT_STYLES = { outline: 'none', boxShadow: '0', border: '2px solid red' };
 
-export const Input: React.FC<InputType> = React.forwardRef(
-    ({ error, onSubmit, ...field }, ref): ReturnComponentType => {
-        const handleKeyPress = (e: KeyboardEvent<HTMLDivElement>): void => {
+export const Input = React.forwardRef(
+    ({ error, onSubmit, ...field }: InputType, ref): ReturnComponentType => {
+        const handleKeyPress = useCallback((e: KeyboardEvent<HTMLDivElement>): void => {
             if (e.key !== 'Enter') {
                 return;
             }
             onSubmit();
-        };
+        }, []);
 
-        const handleClick = (): void => onSubmit();
+        const handleClick = useCallback((): void => onSubmit(), []);
 
         return (
             <FormControl variant="standard">
@@ -47,8 +46,3 @@ export const Input: React.FC<InputType> = React.forwardRef(
         );
     },
 );
-
-Input.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    error: PropTypes.bool.isRequired,
-};

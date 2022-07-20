@@ -17,7 +17,7 @@ import {
 } from 'store';
 import { ReturnComponentType } from 'types';
 
-export const BookInfo = (): ReturnComponentType => {
+export const BookInfo = React.memo((): ReturnComponentType => {
     const dispatch = useAppDispatch();
 
     const { id: bookId } = useParams();
@@ -55,4 +55,4 @@ export const BookInfo = (): ReturnComponentType => {
             </div>
         </div>
     );
-};
+});

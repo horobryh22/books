@@ -7,8 +7,8 @@ import { CustomSelectType } from './types';
 
 import { ReturnComponentType } from 'types';
 
-export const CustomSelect: React.FC<CustomSelectType> = React.forwardRef(
-    ({ items, name, ...field }, ref): ReturnComponentType => {
+export const CustomSelect: React.FC<CustomSelectType> = React.memo(
+    React.forwardRef(({ items, name, ...field }, ref): ReturnComponentType => {
         const mappedItems = useMemo(() => {
             return items.map(item => {
                 return (
@@ -32,7 +32,7 @@ export const CustomSelect: React.FC<CustomSelectType> = React.forwardRef(
                 </Select>
             </FormControl>
         );
-    },
+    }),
 );
 
 CustomSelect.propTypes = {

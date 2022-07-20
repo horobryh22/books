@@ -9,8 +9,8 @@ const BOOK_COUNT_STYLES = {
     marginTop: '20px',
 };
 
-export const BooksTotalCount: React.FC<BooksTotalCountType> = ({
+export const BooksTotalCount = ({
     totalItems,
-}): ReturnComponentType => {
+}: BooksTotalCountType): ReturnComponentType => {
     return <div style={BOOK_COUNT_STYLES}>{`Found ${totalItems} results`}</div>;
 };

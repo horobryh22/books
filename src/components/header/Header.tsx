@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 
@@ -26,7 +26,7 @@ const SELECT_ITEMS: SelectItems = {
     ],
 };
 
-export const Header = (): ReturnComponentType => {
+export const Header = React.memo((): ReturnComponentType => {
     const dispatch = useAppDispatch();
 
     const category = useTypedSelector(state => state.books.searchValues.category);
@@ -45,13 +45,14 @@ export const Header = (): ReturnComponentType => {
             sorting,
         },
     });
-    const onSubmit = (data: SearchFormValues): void => {
+
+    const onSubmit = useCallback((data: SearchFormValues): void => {
         const { bookTitle, category, sorting } = data;
 
         dispatch(fetchBooks({ bookTitle, category, sorting, startIndex: 0 }));
 
         reset();
-    };
+    }, []);
 
     return (
         <div className={classes.header}>
@@ -99,4 +100,4 @@ export const Header = (): ReturnComponentType => {
             </form>
         </div>
     );
-};
+});

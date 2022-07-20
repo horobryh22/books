@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Autorenew } from '@mui/icons-material';
 import { Button } from '@mui/material';
@@ -9,7 +9,7 @@ import { useAppDispatch, useTypedSelector } from 'hooks';
 import { loadMoreBooks, selectStartIndex, selectTotalItems } from 'store';
 import { ReturnComponentType } from 'types';
 
-export const LoadMore = (): ReturnComponentType => {
+export const LoadMore = React.memo((): ReturnComponentType => {
     const dispatch = useAppDispatch();
 
     const totalCountBooks = useTypedSelector(selectTotalItems);
@@ -17,9 +17,9 @@ export const LoadMore = (): ReturnComponentType => {
 
     const disableCondition = totalCountBooks ? totalCountBooks <= paginationStep : false;
 
-    const loadBooks = (): void => {
+    const loadBooks = useCallback((): void => {
         dispatch(loadMoreBooks());
-    };
+    }, []);
 
     return (
         <div className={classes.wrapper}>
@@ -33,4 +33,4 @@ export const LoadMore = (): ReturnComponentType => {
             </Button>
         </div>
     );
-};
+});
